@@ -1,0 +1,47 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(15, 40px);
+    grid-template-rows: repeat(10, 40px);
+    gap: 8px;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;      /* Circle nodes */
+    background-color: #ddd;  /* Default */
+    transition: 0.2s;
+}
+
+.wall {
+    background-color: black;
+}
+
+/* Graph Representation Colors */
+
+.start {
+    background-color: green;
+}
+
+.end {
+    background-color: red;
+}
+
+.wall {
+    background-color: black;
+}
+
+.visited {
+    background-color: #4da6ff;
+}
+
+.path {
+    background-color: #00cc66;
+}
