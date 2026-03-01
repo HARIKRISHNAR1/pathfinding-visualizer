@@ -1,5 +1,9 @@
-const start = [2, 3];
-const end = [8, 12];
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const start = [1, 1];
+const end = [9, 9];
 
 let parent = {};
 let visited = new Set();
@@ -43,7 +47,7 @@ document.querySelectorAll(".cell").forEach(cell => {
 });
 
 
-function runBFS() {
+async function runBFS() {
 
     // Reset previous run (except walls)
     document.querySelectorAll(".cell").forEach(cell => {
@@ -89,6 +93,7 @@ function runBFS() {
 
                 if (!(nr === end[0] && nc === end[1])) {
                     getCell(nr, nc).classList.add("visited");
+                    await sleep(50); //speed control
                 }
             }
         }
@@ -98,12 +103,13 @@ function runBFS() {
 }
 
 
-function reconstructPath() {
+async function reconstructPath() {
 
     let current = end;
 
     while (current.toString() !== start.toString()) {
 
+        await sleep(80);
         let key = current.toString();
         let [r, c] = current;
 
