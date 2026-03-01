@@ -1,37 +1,49 @@
 body {
     text-align: center;
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.controls {
+    margin: 20px;
+}
+
+select, button {
+    padding: 8px 15px;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(15, 40px);
-    grid-template-rows: repeat(10, 40px);
-    gap: 8px;
+    grid-template-columns: repeat(15, 35px);
+    grid-template-rows: repeat(15, 35px);
+    gap: 10px;
     justify-content: center;
     margin: 20px auto;
 }
 
 .cell {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;      /* Circle nodes */
     background-color: #ddd;  /* Default */
+    border: 1px solid #ccc;
     transition: 0.2s;
 }
 
-.wall {
-    background-color: black;
-}
 
 /* Graph Representation Colors */
 
 .start {
     background-color: green;
+    border-radius: 50%;
 }
 
 .end {
     background-color: red;
+    border-radius: 50%;
 }
 
 .wall {
@@ -39,9 +51,9 @@ body {
 }
 
 .visited {
-    background-color: #4da6ff;
+    background-color: lightblue;
 }
 
 .path {
-    background-color: #00cc66;
+    background-color: yellow;
 }

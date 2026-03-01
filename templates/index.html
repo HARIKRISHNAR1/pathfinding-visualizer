@@ -1,32 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Pathfinding Visualizer</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<h2>Pathfinding Visualizer (15 × 10)</h2>
+    <h2>Shortest Path Visualization (15 × 10 Grid)</h2>
 
-<div class="grid">
-    {% for row in range(ROWS) %}
-        {% for col in range(COLS) %}
-            <div class="cell"
-                 data-row="{{row}}"
-                 data-col="{{col}}">
-            </div>
+    <div class="controls">
+        <select id="algorithmSelect">
+            <option value="bfs">BFS</option>
+            <option value="dfs">DFS</option>
+        </select>
+
+        <button onclick="startAlgorithm()">Start</button>
+    </div>
+
+    <div class="grid">
+        {% for row in range(ROWS) %}
+            {% for col in range(COLS) %}
+                <div class="cell"
+                     data-row="{{ row }}"
+                     data-col="{{ col }}">
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
-</div>
+    </div>
 
-<button onclick="runBFS()">Run BFS</button>
+    <!-- Pass ROWS and COLS from Flask -->
+    <script>
+        const ROWS = {{ ROWS }};
+        const COLS = {{ COLS }};
+    </script>
 
-<script>
-    const ROWS = {{ ROWS }};
-    const COLS = {{ COLS }};
-</script>
-
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 </html>

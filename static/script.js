@@ -7,7 +7,7 @@ const end = [9, 9];
 
 let parent = {};
 let visited = new Set();
-let walls = new Set();   // Store wall nodes
+let walls = new Set();
 
 function getCell(r, c) {
     return document.querySelector(`[data-row='${r}'][data-col='${c}']`);
@@ -18,38 +18,52 @@ function initializeGrid() {
     getCell(end[0], end[1]).classList.add("end");
 }
 
-initializeGrid();
+/* ✅ WAIT UNTIL DOM LOADS */
+document.addEventListener("DOMContentLoaded", function () {
 
+    initializeGrid();
 
-// 🧱 WALL CREATION
-document.querySelectorAll(".cell").forEach(cell => {
-    cell.addEventListener("click", () => {
+    // 🧱 WALL CREATION
+    document.querySelectorAll(".cell").forEach(cell => {
+        cell.addEventListener("click", () => {
 
-        let r = parseInt(cell.dataset.row);
-        let c = parseInt(cell.dataset.col);
+            let r = parseInt(cell.dataset.row);
+            let c = parseInt(cell.dataset.col);
 
-        // Prevent start and end from becoming walls
-        if ((r === start[0] && c === start[1]) ||
-            (r === end[0] && c === end[1])) {
-            return;
-        }
+            // Prevent start & end becoming wall
+            if ((r === start[0] && c === start[1]) ||
+                (r === end[0] && c === end[1])) {
+                return;
+            }
 
-        let key = [r, c].toString();
+            let key = [r, c].toString();
 
-        if (walls.has(key)) {
-            walls.delete(key);
-            cell.classList.remove("wall");
-        } else {
-            walls.add(key);
-            cell.classList.add("wall");
-        }
+            if (walls.has(key)) {
+                walls.delete(key);
+                cell.classList.remove("wall");
+            } else {
+                walls.add(key);
+                cell.classList.add("wall");
+            }
+        });
     });
+
 });
+
+
+function startAlgorithm() {
+    const selected = document.getElementById("algorithmSelect").value;
+
+    if (selected === "bfs") {
+        runBFS();
+    } else if (selected === "dfs") {
+        runDFS();
+    }
+}
 
 
 async function runBFS() {
 
-    // Reset previous run (except walls)
     document.querySelectorAll(".cell").forEach(cell => {
         cell.classList.remove("visited", "path");
     });
@@ -66,12 +80,12 @@ async function runBFS() {
         [1,1], [1,-1], [-1,1], [-1,-1]
     ];
 
-    while(queue.length > 0) {
+    while (queue.length > 0) {
 
         let [r, c] = queue.shift();
 
         if (r === end[0] && c === end[1]) {
-            reconstructPath();
+            await reconstructPath();
             return;
         }
 
@@ -85,7 +99,7 @@ async function runBFS() {
                 nr >= 0 && nr < ROWS &&
                 nc >= 0 && nc < COLS &&
                 !visited.has(key) &&
-                !walls.has(key)      // 🚫 Do not pass through walls
+                !walls.has(key)
             ) {
                 queue.push([nr, nc]);
                 visited.add(key);
@@ -93,7 +107,62 @@ async function runBFS() {
 
                 if (!(nr === end[0] && nc === end[1])) {
                     getCell(nr, nc).classList.add("visited");
-                    await sleep(50); //speed control
+                    await sleep(50);
+                }
+            }
+        }
+    }
+
+    alert("No Path Found!");
+}
+
+
+async function runDFS() {
+
+    document.querySelectorAll(".cell").forEach(cell => {
+        cell.classList.remove("visited", "path");
+    });
+
+    parent = {};
+    visited = new Set();
+
+    let stack = [];
+    stack.push(start);
+    visited.add(start.toString());
+
+    const directions = [
+        [1,0], [-1,0], [0,1], [0,-1],
+        [1,1], [1,-1], [-1,1], [-1,-1]
+    ];
+
+    while (stack.length > 0) {
+
+        let [r, c] = stack.pop();
+
+        if (r === end[0] && c === end[1]) {
+            await reconstructPath();
+            return;
+        }
+
+        for (let [dr, dc] of directions) {
+
+            let nr = r + dr;
+            let nc = c + dc;
+            let key = [nr, nc].toString();
+
+            if (
+                nr >= 0 && nr < ROWS &&
+                nc >= 0 && nc < COLS &&
+                !visited.has(key) &&
+                !walls.has(key)
+            ) {
+                stack.push([nr, nc]);
+                visited.add(key);
+                parent[key] = [r, c];
+
+                if (!(nr === end[0] && nc === end[1])) {
+                    getCell(nr, nc).classList.add("visited");
+                    await sleep(50);
                 }
             }
         }
@@ -110,6 +179,7 @@ async function reconstructPath() {
     while (current.toString() !== start.toString()) {
 
         await sleep(80);
+
         let key = current.toString();
         let [r, c] = current;
 
