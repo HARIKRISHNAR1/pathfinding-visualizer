@@ -6,17 +6,25 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
     <h2>Shortest Path Visualization (15 × 10 Grid)</h2>
 
     <div class="controls">
+
         <select id="algorithmSelect">
-            <option value="bfs">BFS</option>
-            <option value="dfs">DFS</option>
+            <option value="bfs">Breadth First Search (BFS)</option>
+            <option value="dfs">Depth First Search (DFS)</option>
+            <option value="astar">A* Algorithm</option>
         </select>
 
         <button onclick="startAlgorithm()">Start</button>
+
+        <button onclick="clearWalls()">Clear Walls</button>
+
+        <button onclick="clearPath()">Clear Path</button>
+
     </div>
 
     <div class="grid">
@@ -30,7 +38,7 @@
         {% endfor %}
     </div>
 
-    <!-- Pass ROWS and COLS from Flask -->
+    <!-- Pass ROWS and COLS from Flask to JavaScript -->
     <script>
         const ROWS = {{ ROWS }};
         const COLS = {{ COLS }};

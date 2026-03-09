@@ -1,59 +1,99 @@
-body {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f6f9;
+    text-align:center;
 }
 
-.controls {
-    margin: 20px;
+/* Title */
+h2{
+    margin-top:20px;
+    color:#333;
 }
 
-select, button {
-    padding: 8px 15px;
-    font-size: 16px;
-    margin: 5px;
-    cursor: pointer;
+/* Control panel */
+.controls{
+    margin:20px;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(15, 35px);
-    grid-template-rows: repeat(15, 35px);
-    gap: 10px;
-    justify-content: center;
-    margin: 20px auto;
+/* Dropdown */
+select{
+    padding:8px 12px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-size:14px;
+    margin-right:10px;
 }
 
-.cell {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;      /* Circle nodes */
-    background-color: #ddd;  /* Default */
-    border: 1px solid #ccc;
-    transition: 0.2s;
+/* Buttons */
+button{
+    padding:8px 16px;
+    margin:5px;
+    border:none;
+    border-radius:6px;
+    background:#3b82f6;
+    color:white;
+    font-size:14px;
+    cursor:pointer;
+    transition:0.2s ease;
 }
 
-
-/* Graph Representation Colors */
-
-.start {
-    background-color: green;
-    border-radius: 50%;
+button:hover{
+    background:#2563eb;
+    transform:scale(1.05);
 }
 
-.end {
-    background-color: red;
-    border-radius: 50%;
+/* Grid layout */
+.grid{
+    display:grid;
+    grid-template-columns: repeat(15,45px);
+    justify-content:center;
+    gap:10px;
+    margin-top:20px;
 }
 
-.wall {
-    background-color: black;
+/* NODE CIRCLES */
+.cell{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    border:2px solid #ccc;
+    background:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:0.2s;
 }
 
-.visited {
-    background-color: lightblue;
+/* Start Node */
+.start{
+    background:#22c55e;
+    color:white;
+    font-weight:bold;
+    border:none;
 }
 
-.path {
-    background-color: yellow;
+/* End Node */
+.end{
+    background:#ef4444;
+    color:white;
+    font-weight:bold;
+    border:none;
+}
+
+/* Wall Node */
+.wall{
+    background:#333;
+    border:none;
+}
+
+/* Visited Nodes */
+.visited{
+    background:#60a5fa;
+}
+
+/* Final Path */
+.path{
+    background:#facc15;
 }
